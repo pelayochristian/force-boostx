@@ -1,10 +1,10 @@
 import { commands, ExtensionContext } from "vscode";
-import { HelloWorldPanel } from "./panels/HelloWorldPanel";
+import { DebugLogsExplorer } from "./panels/DebugLogsExplorer";
 
 export function activate(context: ExtensionContext) {
   // Create the show hello world command
   const showHelloWorldCommand = commands.registerCommand("force-boostx.showHelloWorld", () => {
-    HelloWorldPanel.render(context.extensionUri);
+    DebugLogsExplorer.render(context.extensionUri);
   });
 
   // Add command to the extension context

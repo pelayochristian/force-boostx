@@ -7,6 +7,7 @@ export default defineConfig({
   build: {
     outDir: "build",
     rollupOptions: {
+      external: ['split-pane-react'],
       output: {
         entryFileNames: `assets/[name].js`,
         chunkFileNames: `assets/[name].js`,
