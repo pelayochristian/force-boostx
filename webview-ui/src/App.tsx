@@ -11,6 +11,7 @@ import {
 } from "@vscode/webview-ui-toolkit/react";
 import "./App.css";
 import { useEffect, useState } from "react";
+import { Button, Table } from "flowbite-react";
 
 interface Data {
     result: Array<{
@@ -71,81 +72,119 @@ const App = () => {
                 <VSCodePanelTab id="tab-3">DEBUG CONSOLE</VSCodePanelTab>
                 <VSCodePanelTab id="tab-4">TERMINAL</VSCodePanelTab>
                 <VSCodePanelView id="view-1">
-                    <section>
-                        <VSCodeButton onClick={handleHowdyClick}>Get Debug Logs</VSCodeButton>
-                        <VSCodeDataGrid>
-                            <VSCodeDataGridRow row-type="header">
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="1">
-                                    Application
-                                </VSCodeDataGridCell>
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="2">
-                                    Duration (ms)
-                                </VSCodeDataGridCell>
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="3">
-                                    Id
-                                </VSCodeDataGridCell>
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="4">
-                                    Location
-                                </VSCodeDataGridCell>
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="5">
-                                    Size (B)
-                                </VSCodeDataGridCell>
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="6">
-                                    Log User
-                                </VSCodeDataGridCell>
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="7">
-                                    Operation
-                                </VSCodeDataGridCell>
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="8">
-                                    Request
-                                </VSCodeDataGridCell>
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="9">
-                                    Start Time
-                                </VSCodeDataGridCell>
-                                <VSCodeDataGridCell cell-type="columnheader" grid-column="10">
-                                    Status
-                                </VSCodeDataGridCell>
-                            </VSCodeDataGridRow>
-                            {isLoading && !data && <VSCodeProgressRing />}
+                    <div className="relative overflow-x-auto">
+                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3">
+                                        Product name
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        Color
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        Category
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        Price
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th
+                                        scope="row"
+                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        Apple MacBook Pro 17"
+                                    </th>
+                                    <td className="px-6 py-4">Silver</td>
+                                    <td className="px-6 py-4">Laptop</td>
+                                    <td className="px-6 py-4">$2999</td>
+                                </tr>
+                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th
+                                        scope="row"
+                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        Microsoft Surface Pro
+                                    </th>
+                                    <td className="px-6 py-4">White</td>
+                                    <td className="px-6 py-4">Laptop PC</td>
+                                    <td className="px-6 py-4">$1999</td>
+                                </tr>
+                                <tr className="bg-white dark:bg-gray-800">
+                                    <th
+                                        scope="row"
+                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        Magic Mouse 2
+                                    </th>
+                                    <td className="px-6 py-4">Black</td>
+                                    <td className="px-6 py-4">Accessories</td>
+                                    <td className="px-6 py-4">$99</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                            {!isLoading &&
-                                data &&
-                                data?.result.map((row) => (
-                                    <VSCodeDataGridRow>
-                                        <VSCodeDataGridCell grid-column="1">
-                                            {row.Application}
-                                        </VSCodeDataGridCell>
-                                        <VSCodeDataGridCell grid-column="2">
-                                            {row.DurationMilliseconds}
-                                        </VSCodeDataGridCell>
-                                        <VSCodeDataGridCell grid-column="3">
-                                            {row.Id}
-                                        </VSCodeDataGridCell>
-                                        <VSCodeDataGridCell grid-column="4">
-                                            {row.Location}
-                                        </VSCodeDataGridCell>
-                                        <VSCodeDataGridCell grid-column="5">
-                                            {row.LogLength}
-                                        </VSCodeDataGridCell>
-                                        <VSCodeDataGridCell grid-column="6">
-                                            {row.LogUser.Name}
-                                        </VSCodeDataGridCell>
-                                        <VSCodeDataGridCell grid-column="7">
-                                            {row.Operation}
-                                        </VSCodeDataGridCell>
-                                        <VSCodeDataGridCell grid-column="8">
-                                            {row.Request}
-                                        </VSCodeDataGridCell>
-                                        <VSCodeDataGridCell grid-column="9">
-                                            {row.StartTime}
-                                        </VSCodeDataGridCell>
-                                        <VSCodeDataGridCell grid-column="10">
-                                            {row.Status}
-                                        </VSCodeDataGridCell>
-                                    </VSCodeDataGridRow>
-                                ))}
-                        </VSCodeDataGrid>
-                    </section>
+                    {/* <section>
+                        <Button color="purple" pill={true} onClick={handleHowdyClick}>
+                            Purple
+                        </Button>
+                        <div className="relative overflow-x-auto">
+                            <table className="w-full text-sm text-left text-gray-500 dark:text-white max-w-max">
+                                <thead className="text-xs text-gray-400 uppercase bg-gray-700">
+                                    <tr>
+                                        <th scope="col" className="px-2 py-2">
+                                            Log User
+                                        </th>
+                                        <th scope="col" className="px-2 py-2">
+                                            Application
+                                        </th>
+                                        <th scope="col" className="px-2 py-2">
+                                            Operation
+                                        </th>
+                                        <th scope="col" className="px-2 py-2">
+                                            Start Time
+                                        </th>
+                                        <th scope="col" className="px-2 py-2">
+                                            Status
+                                        </th>
+                                        <th scope="col" className="px-2 py-2">
+                                            Size (B)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {!isLoading &&
+                                        data &&
+                                        data?.result.map((row) => (
+                                            <tr className=" border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td
+                                                    scope="row"
+                                                    className="px-2 py-2 font-normal text-white whitespace-nowrap dark:text-white">
+                                                    {row.LogUser.Name}
+                                                </td>
+                                                <td className="px-2 py-2 font-normal text-white whitespace-nowrap dark:text-white">
+                                                    {row.Application}
+                                                </td>
+                                                <td className="px-2 py-2 font-normal text-white whitespace-nowrap dark:text-white">
+                                                    {row.Operation}
+                                                </td>
+                                                <td className="px-2 py-2 font-normal text-white whitespace-nowrap dark:text-white">
+                                                    {row.StartTime}
+                                                </td>
+                                                <td className="px-2 py-2 font-normal text-white whitespace-nowrap dark:text-white">
+                                                    {row.Status}
+                                                </td>
+                                                <td className="px-2 py-2 font-normal text-white whitespace-nowrap dark:text-white">
+                                                    {row.LogLength}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section> */}
+                    test asf
                 </VSCodePanelView>
                 <VSCodePanelView id="view-2"> ... Insert Complex Content ... </VSCodePanelView>
                 <VSCodePanelView id="view-3"> ... Insert Complex Content ... </VSCodePanelView>
