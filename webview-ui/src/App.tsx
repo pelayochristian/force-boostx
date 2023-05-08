@@ -5,14 +5,18 @@ import DebugLogsViewer from "./components/DebugLogsViewer";
 
 const App = () => {
     return (
-        <SplitPane split="horizontal" defaultSize={400} primary="first">
-            <div>
-                <DebugLogsTable />
+        <section className="my-5 overflow-hidden">
+            <div className="rounded-lg border bg-white dark:border-neutral-600 dark:bg-neutral-800">
+                <div className="" style={{ maxHeight: "40vh" }}>
+                    <DebugLogsTable />
+                </div>
+                <div className="hidden md:block mt-4 border-t dark:border-neutral-600">
+                    <div className="overflow-x-auto" style={{ maxHeight: "53vh" }}>
+                        <DebugLogsViewer />
+                    </div>
+                </div>
             </div>
-            <div className="p-3">
-                <DebugLogsViewer />
-            </div>
-        </SplitPane>
+        </section>
     );
 };
 

@@ -19,15 +19,16 @@ const DebugLogsViewer = () => {
     });
 
     return (
-        <div className="flex rounded-lg border border-gray-700 bg-gray-800 shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col">
-            <div className="flex h-full flex-col justify-center gap-4 p-6">
-                {log && (
-                    <pre className="font-light">
-                        <code className="language-javascript">{log?.result[0].log}</code>
+        <div className="p-4">
+            {log && (
+                <div>
+                    <pre>
+                        <p className="language-javascript">{log?.result[0].log}</p>
                     </pre>
-                )}
-            </div>
+                </div>
+            )}
         </div>
+        // </section>
     );
 };
 
