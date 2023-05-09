@@ -17,7 +17,7 @@
         "commands": [
             {
                 "command": "force-boostx.showHelloWorld",
-                "title": "Force Boost (React + Vite): Show"
+                "title": "Force Boost : Show"
             }
         ]
     },
