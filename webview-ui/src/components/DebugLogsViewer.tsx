@@ -7,6 +7,7 @@ interface Log {
 }
 const DebugLogsViewer = () => {
     const [log, setLog] = useState<Log | null>(null);
+    const [searchString, setSearchString] = useState<string | null>("");
 
     // Handle messages sent from the extension to the webview
     window.addEventListener("message", (event) => {
@@ -18,17 +19,47 @@ const DebugLogsViewer = () => {
         }
     });
 
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchString(event.target.value);
+    };
+
+    const filterLogs = () => {
+        const logs = log?.result[0].log;
+        const lines = logs?.split("\n");
+        // const filteredLines = lines?.filter((line) => line.includes(searchString as string));
+        const filteredLines = lines?.filter((line) =>
+            line.toLowerCase().includes(searchString?.toLowerCase() as string)
+        );
+        return filteredLines?.join("\n");
+    };
+
     return (
-        <div className="p-4">
-            {log && (
+        <section>
+            <div className="grid grid-cols-3 gap-3 mb-4 overflow-hidden border-b dark:border-neutral-600 p-2">
+                <div className="col-span-2"></div>
                 <div>
-                    <pre>
-                        <p className="language-javascript">{log?.result[0].log}</p>
-                    </pre>
+                    <div className="relative float-label-input">
+                        <input
+                            type="text"
+                            value={searchString || ""}
+                            onChange={handleSearchChange}
+                            id="name"
+                            placeholder="Search"
+                            className="block w-full bg-inherit focus:outline-none focus:shadow-outline border border-neutral-600 rounded-md py-1 px-1 appearance-none leading-normal focus:border-blue-400"
+                        />
+                    </div>
                 </div>
-            )}
-        </div>
-        // </section>
+            </div>
+            <div className="p-4">
+                {log && (
+                    <div>
+                        <pre>
+                            <code className="language-javascript">{filterLogs()}</code>
+                        </pre>
+                    </div>
+                )}
+            </div>
+        </section>
     );
 };
 

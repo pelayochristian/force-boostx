@@ -2,21 +2,28 @@ import SplitPane from "react-split-pane";
 import "./App.css";
 import DebugLogsTable from "./components/DebugLogsTable";
 import DebugLogsViewer from "./components/DebugLogsViewer";
+import { useState } from "react";
 
 const App = () => {
+    const [secondPanelSize, setSecondPanelSize] = useState<number | null>(400);
+
     return (
-        <section className="my-5 overflow-hidden">
-            <div className="rounded-lg border bg-white dark:border-neutral-600 dark:bg-neutral-800">
-                <div className="" style={{ maxHeight: "40vh" }}>
-                    <DebugLogsTable />
-                </div>
-                <div className="hidden md:block mt-4 border-t dark:border-neutral-600">
-                    <div className="overflow-x-auto" style={{ maxHeight: "53vh" }}>
-                        <DebugLogsViewer />
-                    </div>
-                </div>
+        <SplitPane
+            split="horizontal"
+            defaultSize={400}
+            maxSize={400}
+            primary="first"
+            onChange={(size) => setSecondPanelSize(size)}
+            style={{ maxHeight: "100vh", boxSizing: "border-box" }}>
+            <div className="w-full h-full">
+                <DebugLogsTable />
             </div>
-        </section>
+            <div
+                className="bg-neutral-800"
+                style={{ height: `calc(100vh - ${secondPanelSize}px)`, overflowY: "auto" }}>
+                <DebugLogsViewer />
+            </div>
+        </SplitPane>
     );
 };
 
