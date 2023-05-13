@@ -5,7 +5,7 @@ interface Log {
         log: string;
     }>;
 }
-const DebugLogsViewer = () => {
+const LogsViewer = () => {
     const [log, setLog] = useState<Log | null>(null);
     const [searchString, setSearchString] = useState<string | null>("");
 
@@ -65,4 +65,4 @@ const DebugLogsViewer = () => {
     );
 };
 
-export default DebugLogsViewer;
+export default LogsViewer;

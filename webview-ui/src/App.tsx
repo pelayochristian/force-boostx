@@ -1,7 +1,7 @@
 import SplitPane from "react-split-pane";
 import "./App.css";
 import DebugLogsTable from "./components/DebugLogsTable";
-import DebugLogsViewer from "./components/DebugLogsViewer";
+import LogsViewer from "./components/LogsViewer";
 import { useState } from "react";
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
             <div
                 className="bg-neutral-800"
                 style={{ height: `calc(100vh - ${secondPanelSize}px)`, overflowY: "auto" }}>
-                <DebugLogsViewer />
+                <LogsViewer />
             </div>
         </SplitPane>
     );
