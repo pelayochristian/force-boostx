@@ -26,7 +26,6 @@ const DebugLogsViewer = () => {
     const filterLogs = () => {
         const logs = log?.result[0].log;
         const lines = logs?.split("\n");
-        // const filteredLines = lines?.filter((line) => line.includes(searchString as string));
         const filteredLines = lines?.filter((line) =>
             line.toLowerCase().includes(searchString?.toLowerCase() as string)
         );
@@ -35,7 +34,10 @@ const DebugLogsViewer = () => {
 
     return (
         <section>
-            <div className="grid grid-cols-3 gap-3 mb-4 overflow-hidden border-b dark:border-neutral-600 p-2">
+            <div
+                className="grid grid-cols-3 gap-3 mb-4 overflow-hidden border-b border-t dark:border-neutral-600 pb-2 pl-2 pr-2 bg-neutral-800"
+                style={{ position: "sticky", top: 0, zIndex: 1 }}>
+                <div className="col-span-2"></div>
                 <div className="col-span-2"></div>
                 <div>
                     <div className="relative float-label-input">

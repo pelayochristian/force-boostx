@@ -15,6 +15,7 @@ import * as vscode from 'vscode';
  * - Setting message listeners so data can be passed between the webview and extension
  */
 export class DebugLogsExplorer {
+	// public static readonly viewType = 'calicoColors.colorsView';
 	public static currentPanel: DebugLogsExplorer | undefined;
 	private readonly _panel: WebviewPanel;
 	private _disposables: Disposable[] = [];
@@ -26,6 +27,7 @@ export class DebugLogsExplorer {
 	 * @param extensionUri The URI of the directory containing the extension
 	 */
 	private constructor(panel: WebviewPanel, extensionUri: Uri) {
+
 		this._panel = panel;
 
 		// Set an event listener to listen for when the panel is disposed (i.e. when the user closes

@@ -72,7 +72,7 @@ const DebugLogsTable = () => {
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                     <div className="overflow-x-auto p-4" style={{ maxHeight: "400px" }}>
-                        <table className="min-w-full text-center text-sm font-light">
+                        <table className="min-w-full text-center font-light text-xs">
                             <thead className="border-b font-medium dark:border-neutral-600">
                                 <tr>
                                     <th scope="col" className="px-2 py-2">
@@ -103,7 +103,7 @@ const DebugLogsTable = () => {
                                             className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-600"
                                             onClick={retrieveDebugLogs}
                                             id={row.Id}>
-                                            <td className="whitespace-nowrap px-6 py-2 font-medium">
+                                            <td className="whitespace-nowrap px-6 py-2">
                                                 {row.LogUser.Name}
                                             </td>
                                             <td className="whitespace-nowrap px-6 py-2">

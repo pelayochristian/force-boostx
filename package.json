@@ -3,6 +3,7 @@
     "displayName": "force-boostx",
     "description": "A hello world sample extension to demonstrate using React + Vite with the Webview UI Toolkit for VS Code.",
     "version": "0.0.1",
+    "repository": "https://github.com/pelayochristian/force-boostx",
     "engines": {
         "vscode": "^1.46.0"
     },
@@ -14,6 +15,16 @@
     ],
     "main": "./out/extension.js",
     "contributes": {
+        "views": {
+            "explorer": [
+                {
+                    "type": "webview",
+                    "id": "calicoColors.colorsView",
+                    "name": "Log Explorer",
+                    "contextualTitle": "Log Explorer"
+                }
+            ]
+        },
         "commands": [
             {
                 "command": "force-boostx.showHelloWorld",
