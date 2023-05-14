@@ -9,7 +9,7 @@ const DebugLogsTable = () => {
 
     useEffect(() => {
         setLoading(true);
-        handleHowdyClick();
+        getDebugLogs();
     }, []);
 
     // Handle messages sent from the extension to the webview
@@ -23,19 +23,12 @@ const DebugLogsTable = () => {
         }
     });
 
-    const handleHowdyClick = () => {
+    const getDebugLogs = () => {
         setLoading(true);
         setData(null);
         vscode.postMessage({
             command: "get-debug-logs",
         });
-    };
-
-    const convertDTtoReadable = (datetime: string) => {
-        const date = new Date(datetime);
-        const dateString = date.toLocaleDateString();
-        const timeString = date.toLocaleTimeString();
-        return `${dateString} ${timeString}`;
     };
 
     return <div>{data && <DataTable columns={columns} data={data} />}</div>;

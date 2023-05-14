@@ -9,6 +9,7 @@
         "watch": "tsc && vite build --watch"
     },
     "dependencies": {
+        "@radix-ui/react-checkbox": "^1.0.3",
         "@radix-ui/react-slot": "^1.0.1",
         "@tanstack/react-table": "^8.9.1",
         "class-variance-authority": "^0.6.0",

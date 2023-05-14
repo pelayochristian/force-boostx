@@ -15,7 +15,7 @@ const App = () => {
             primary="first"
             onChange={(size) => setSecondPanelSize(size)}
             style={{ maxHeight: "100vh", boxSizing: "border-box" }}>
-            <div className="w-full border border-teal-300 border-1">
+            <div className="w-full">
                 <DebugLogsTable />
             </div>
             <div

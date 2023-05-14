@@ -12,10 +12,10 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
 } from "@tanstack/react-table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { RefreshCw } from "lucide-react";
 import { Log } from "./columns";
 
 interface DataTableProps<TData, TValue> {
@@ -52,15 +52,18 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
     return (
         <div>
-            <div className="flex items-center py-4">
+            <div className="flex items-center">
                 <Input
-                    placeholder="Filter Log User..."
+                    placeholder="Search Log User..."
                     value={(table.getColumn("LogUser_Name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn("LogUser_Name")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm h-8"
+                    className="max-w-full h-7 text-xs rounded-none"
                 />
+                <Button className="h-7 rounded-none text-xs">
+                    <RefreshCw className="mr-2 h-4 w-4" /> Retrieve
+                </Button>
             </div>
             <div className="rounded-md border">
                 <Table className="text-xs font-light">
@@ -124,14 +127,16 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                     variant="outline"
                     size="sm"
                     onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}>
+                    disabled={!table.getCanPreviousPage()}
+                    className="h-7 rounded-none text-xs">
                     Previous
                 </Button>
                 <Button
                     variant="outline"
                     size="sm"
                     onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}>
+                    disabled={!table.getCanNextPage()}
+                    className="h-7 rounded-none text-xs">
                     Next
                 </Button>
             </div>

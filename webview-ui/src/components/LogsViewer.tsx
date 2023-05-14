@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Input } from "./ui/input";
+import { Checkbox } from "./ui/checkbox";
 
 interface Log {
     result: Array<{
@@ -8,6 +10,7 @@ interface Log {
 const LogsViewer = () => {
     const [log, setLog] = useState<Log | null>(null);
     const [searchString, setSearchString] = useState<string | null>("");
+    const [debugOnly, setDebugOnly] = useState(false);
 
     // Handle messages sent from the extension to the webview
     window.addEventListener("message", (event) => {
@@ -26,38 +29,50 @@ const LogsViewer = () => {
     const filterLogs = () => {
         const logs = log?.result[0].log;
         const lines = logs?.split("\n");
-        const filteredLines = lines?.filter((line) =>
+        const searchLines = debugOnly
+            ? lines?.filter((line) => line.toLowerCase().includes("DEBUG".toLowerCase() as string))
+            : lines;
+        const filteredLines = searchLines?.filter((line) =>
             line.toLowerCase().includes(searchString?.toLowerCase() as string)
         );
+
         return filteredLines?.join("\n");
     };
 
     return (
         <section>
             <div
-                className="grid grid-cols-3 gap-3 mb-4 overflow-hidden border-b border-t dark:border-neutral-600 pb-2 pl-2 pr-2 bg-neutral-800"
+                className="bg-background flex items-center"
                 style={{ position: "sticky", top: 0, zIndex: 1 }}>
-                <div className="col-span-2"></div>
-                <div className="col-span-2"></div>
-                <div>
-                    <div className="relative float-label-input">
-                        <input
-                            type="text"
-                            value={searchString || ""}
-                            onChange={handleSearchChange}
-                            id="name"
-                            placeholder="Search"
-                            className="block w-full bg-inherit focus:outline-none focus:shadow-outline border border-neutral-600 rounded-md py-1 px-1 appearance-none leading-normal focus:border-blue-400"
-                        />
-                    </div>
+                <Input
+                    type="text"
+                    value={searchString || ""}
+                    onChange={handleSearchChange}
+                    id="name"
+                    placeholder="Search..."
+                    className="max-w-full h-7 text-xs rounded-none"
+                />
+
+                <div className="flex items-center space-x-2 w-28">
+                    <Checkbox
+                        id="debugOnly"
+                        checked={debugOnly}
+                        onClick={() => setDebugOnly((prev) => !prev)}
+                    />
+
+                    <label
+                        htmlFor="debugOnly"
+                        className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        Debug Only
+                    </label>
                 </div>
             </div>
+
             <div className="p-4 font-light">
                 {log && (
                     <div>
                         <pre>
                             <code className="language-log">{filterLogs()}</code>
-                            {/* {filterLogs()} */}
                         </pre>
                     </div>
                 )}
