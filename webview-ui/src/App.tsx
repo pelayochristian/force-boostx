@@ -10,16 +10,16 @@ const App = () => {
     return (
         <SplitPane
             split="horizontal"
-            defaultSize={400}
-            maxSize={400}
+            defaultSize={490}
+            maxSize={490}
             primary="first"
             onChange={(size) => setSecondPanelSize(size)}
             style={{ maxHeight: "100vh", boxSizing: "border-box" }}>
-            <div className="w-full h-full">
+            <div className="w-full border border-teal-300 border-1">
                 <DebugLogsTable />
             </div>
             <div
-                className="bg-neutral-800"
+                className="logViewerPanel"
                 style={{ height: `calc(100vh - ${secondPanelSize}px)`, overflowY: "auto" }}>
                 <LogsViewer />
             </div>

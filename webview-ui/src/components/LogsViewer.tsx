@@ -52,11 +52,12 @@ const LogsViewer = () => {
                     </div>
                 </div>
             </div>
-            <div className="p-4">
+            <div className="p-4 font-light">
                 {log && (
                     <div>
                         <pre>
-                            <code className="language-javascript">{filterLogs()}</code>
+                            <code className="language-log">{filterLogs()}</code>
+                            {/* {filterLogs()} */}
                         </pre>
                     </div>
                 )}
