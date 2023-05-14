@@ -17,6 +17,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { RefreshCw } from "lucide-react";
 import { Log } from "./columns";
+import eventBus from "../../lib/eventBus";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -26,7 +27,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-
+    const [isLoading, setIsLoading] = React.useState(false);
     const table = useReactTable({
         data,
         columns,
@@ -42,11 +43,29 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         },
     });
 
-    const retrieveDebugLogs = (event: any) => {
+    window.addEventListener("message", (event) => {
+        const message = event.data;
+        switch (message.command) {
+            case "constructDebugLogsTable":
+                setIsLoading(false);
+                break;
+        }
+    });
+
+    const getDebugLogById = (event: any) => {
         const id = event.currentTarget.id;
         vscode.postMessage({
             command: "get-debug-log-by-id",
             data: id,
+        });
+    };
+
+    const getDebugLogs = () => {
+        eventBus.emit("reset-logs-data", true);
+
+        setIsLoading(true);
+        vscode.postMessage({
+            command: "get-debug-logs",
         });
     };
 
@@ -61,8 +80,15 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                     }
                     className="max-w-full h-7 text-xs rounded-none"
                 />
-                <Button className="h-7 rounded-none text-xs">
-                    <RefreshCw className="mr-2 h-4 w-4" /> Retrieve
+                <Button className="h-7 rounded-none text-xs" onClick={getDebugLogs}>
+                    {/* <RefreshCw className="mr-2 h-4 w-4" /> Retrieve */}
+                    {isLoading ? (
+                        "Loading..."
+                    ) : (
+                        <>
+                            <RefreshCw className="mr-2 h-4 w-4" /> Retrieve
+                        </>
+                    )}
                 </Button>
             </div>
             <div className="rounded-md border">
@@ -97,7 +123,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
                                         id={rowId}
-                                        onClick={retrieveDebugLogs}>
+                                        onClick={getDebugLogById}>
                                         {row.getVisibleCells().map((cell) => {
                                             return (
                                                 <TableCell key={cell.id} className="p-2">
