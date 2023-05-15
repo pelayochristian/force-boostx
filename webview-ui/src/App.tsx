@@ -5,17 +5,19 @@ import LogsViewer from "./components/LogsViewer";
 import { useState } from "react";
 
 const App = () => {
-    const [secondPanelSize, setSecondPanelSize] = useState<number | null>(400);
+    const [secondPanelSize, setSecondPanelSize] = useState<number | null>(300);
 
     return (
         <SplitPane
             split="horizontal"
-            defaultSize={490}
-            maxSize={490}
+            defaultSize={300}
+            maxSize={300}
             primary="first"
             onChange={(size) => setSecondPanelSize(size)}
             style={{ maxHeight: "100vh", boxSizing: "border-box" }}>
-            <div className="w-full">
+            <div
+                className="w-full"
+                style={{ maxHeight: `${secondPanelSize}px`, overflow: "scroll" }}>
                 <DebugLogsTable />
             </div>
             <div

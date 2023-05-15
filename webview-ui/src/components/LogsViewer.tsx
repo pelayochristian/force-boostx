@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
+import { Filter } from "lucide-react";
 
 interface Log {
     result: Array<{
@@ -42,15 +43,16 @@ const LogsViewer = () => {
     return (
         <section>
             <div
-                className="bg-background flex items-center"
+                className="bg-background flex items-center mb-1"
                 style={{ position: "sticky", top: 0, zIndex: 1 }}>
+                <Filter className="mr-2 h-4 w-4" />
                 <Input
                     type="text"
                     value={searchString || ""}
                     onChange={handleSearchChange}
                     id="name"
                     placeholder="Search..."
-                    className="max-w-full h-7 text-xs rounded-none"
+                    className="max-w-full h-7 text-xs rounded-none mr-2"
                 />
 
                 <div className="flex items-center space-x-2 w-28">

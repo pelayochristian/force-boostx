@@ -49,6 +49,14 @@ export const columns: ColumnDef<Log>[] = [
     {
         accessorKey: "Status",
         header: "Status",
+        cell: ({ row }) => {
+            const status = row.getValue("Status");
+            return status === "Success" ? (
+                <span className="text-green-300">{status}</span>
+            ) : (
+                <span className="text-red-300">{status}</span>
+            );
+        },
     },
     {
         accessorKey: "LogLength",
