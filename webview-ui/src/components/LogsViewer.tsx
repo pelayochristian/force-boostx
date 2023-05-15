@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import { Filter } from "lucide-react";
+import eventBus from "../lib/eventBus";
 
 interface Log {
     result: Array<{
@@ -12,21 +13,67 @@ const LogsViewer = () => {
     const [log, setLog] = useState<Log | null>(null);
     const [searchString, setSearchString] = useState<string | null>("");
     const [debugOnly, setDebugOnly] = useState(false);
+    const [resetPanel, setResetPanel] = useState(false);
 
-    // Handle messages sent from the extension to the webview
+    useEffect(() => {
+        // Subscribe reset-log-panel from eventBus.
+        eventBus.subscribe("reset-log-panel", handleResetLogPanel);
+
+        // Subscribe reset-logs-data from eventBus.
+        eventBus.subscribe("reset-logs-data", handleResetLogsData);
+
+        return () => {
+            eventBus.events["reset-logs-data"] = eventBus.events["reset-logs-data"].filter(
+                (callback: Function) => callback !== handleResetLogsData
+            );
+
+            eventBus.events["reset-log-panel"] = eventBus.events["reset-log-panel"].filter(
+                (callback: Function) => callback !== handleResetLogPanel
+            );
+        };
+    }, []);
+
+    const handleResetLogsData = (isResetLogsData: boolean) => {
+        if (!isResetLogsData) return;
+        setLog(null);
+        setResetPanel(false);
+    };
+
+    /**
+     * Handle the subscribing reset-log-panel event.
+     * @param isResetLogPanel
+     */
+    const handleResetLogPanel = (isResetLogPanel: boolean) => {
+        if (!isResetLogPanel) return;
+        setLog(null);
+        setResetPanel(true);
+    };
+
+    /**
+     * Handle messages sent from the extension to the webview
+     */
     window.addEventListener("message", (event) => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
             case "parseDebugLogById":
                 setLog(JSON.parse(message.data));
+                setResetPanel(false);
                 break;
         }
     });
 
+    /**
+     * Handle the ChangeEvent of the Search Input.
+     * @param event
+     */
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchString(event.target.value);
     };
 
+    /**
+     * Handle the filtering logic for debug and normal search.
+     * @returns
+     */
     const filterLogs = () => {
         const logs = log?.result[0].log;
         const lines = logs?.split("\n");
@@ -76,6 +123,13 @@ const LogsViewer = () => {
                         <pre>
                             <code className="language-log">{filterLogs()}</code>
                         </pre>
+                    </div>
+                )}
+
+                {!log && resetPanel && (
+                    <div
+                        style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        Retrieving debug logs....
                     </div>
                 )}
             </div>

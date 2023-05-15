@@ -19,11 +19,17 @@ const DebugLogsTable = () => {
         };
     }, []);
 
+    /**
+     * Handle the subscribing of the event name "reset-logs-data".
+     * @param isResetLogs
+     */
     const handleDataReceived = (isResetLogs: boolean) => {
         if (isResetLogs) setData([]);
     };
 
-    // Handle messages sent from the extension to the webview
+    /**
+     * Handle messages sent from the extension to the webview
+     */
     window.addEventListener("message", (event) => {
         const message = event.data;
         // Panels Command
@@ -34,6 +40,10 @@ const DebugLogsTable = () => {
         }
     });
 
+    /**
+     * Post a command message to get the debug logs to the
+     * DebugLogsExplorer Panel.
+     */
     const getDebugLogs = () => {
         setData([]);
         vscode.postMessage({

@@ -26,6 +26,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [activeRowId, setActiveRowId] = React.useState(null);
+    const [resetLogsData, setResetLogsData] = React.useState(false);
     const table = useReactTable({
         data,
         columns,
@@ -40,6 +42,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         },
     });
 
+    /**
+     * Handle messages sent from the extension to
+     * the webview.
+     */
     window.addEventListener("message", (event) => {
         const message = event.data;
         switch (message.command) {
@@ -49,18 +55,30 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         }
     });
 
+    /**
+     * Post a command message to get the debug logs using log Id
+     *  to the DebugLogsExplorer Panel.
+     *      * @param event
+     */
     const getDebugLogById = (event: any) => {
+        eventBus.emit("reset-log-panel", true);
         const id = event.currentTarget.id;
+        setActiveRowId(id);
         vscode.postMessage({
             command: "get-debug-log-by-id",
             data: id,
         });
     };
 
+    /**
+     * Post a command message to get the debug logs to the
+     * DebugLogsExplorer Panel.
+     */
     const getDebugLogs = () => {
         eventBus.emit("reset-logs-data", true);
         setIsLoading(true);
-
+        setActiveRowId(null);
+        setResetLogsData(true);
         vscode.postMessage({
             command: "get-debug-logs",
         });
@@ -118,12 +136,21 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                                 const original = row.original as Log;
                                 // assign the original Id to the row's key
                                 const rowId = original.Id;
+
+                                // const isSelected = row.getIsSelected();
+                                const isActive = rowId === activeRowId;
+                                const rowClasses = ["cursor-pointer"];
+
+                                if (isActive) {
+                                    rowClasses.push("bg-muted/100");
+                                }
                                 return (
                                     <TableRow
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
                                         id={rowId}
-                                        onClick={getDebugLogById}>
+                                        onClick={getDebugLogById}
+                                        className={rowClasses.join(" ")}>
                                         {row.getVisibleCells().map((cell) => {
                                             return (
                                                 <TableCell key={cell.id} className="p-2">
@@ -140,7 +167,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                    {resetLogsData ? <p>Retrieving Logs...</p> : <p>No results.</p>}
                                 </TableCell>
                             </TableRow>
                         )}
