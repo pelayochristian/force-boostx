@@ -22,8 +22,10 @@ const App = () => {
             </div>
             <div
                 className="logViewerPanel"
-                style={{ height: `calc(100vh - ${secondPanelSize}px)`, overflowY: "auto" }}>
-                <LogsViewer />
+                style={{ height: `calc(100vh - ${secondPanelSize}px)` }}>
+                {secondPanelSize && (
+                    <LogsViewer height={`calc((100vh - 32px) - ${secondPanelSize}px)`} />
+                )}
             </div>
         </SplitPane>
     );
