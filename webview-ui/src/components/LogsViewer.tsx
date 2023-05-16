@@ -83,7 +83,9 @@ const LogsViewer: React.FC<LogsViewerProps> = ({ height }) => {
         const logs = log?.result[0].log;
         const lines = logs?.split("\n");
         const searchLines = debugOnly
-            ? lines?.filter((line) => line.toLowerCase().includes("DEBUG".toLowerCase() as string))
+            ? lines?.filter((line) =>
+                  line.toLowerCase().includes("|USER_DEBUG|".toLowerCase() as string)
+              )
             : lines;
         const filteredLines = searchLines?.filter((line) =>
             line.toLowerCase().includes(searchString?.toLowerCase() as string)
