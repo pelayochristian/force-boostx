@@ -3,7 +3,7 @@
     "displayName": "ForceBoost",
     "description": "ForceBoost is a feature-rich VS Code extension designed to supercharge Salesforce developers' productivity.",
     "publisher": "ChristianPelayo",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "repository": "https://github.com/pelayochristian/force-boostx",
     "engines": {
         "vscode": "^1.46.0"
