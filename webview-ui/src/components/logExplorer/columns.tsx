@@ -1,5 +1,3 @@
-"use client";
-
 import { ColumnDef } from "@tanstack/react-table";
 
 export type Log = {
@@ -50,7 +48,7 @@ export const columns: ColumnDef<Log>[] = [
         accessorKey: "Status",
         header: "Status",
         cell: ({ row }) => {
-            const status = row.getValue("Status");
+            const status = row.getValue("Status") as string;
             return status === "Success" ? (
                 <span className="text-green-300">{status}</span>
             ) : (

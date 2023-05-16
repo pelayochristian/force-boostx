@@ -1,8 +1,7 @@
 import { Disposable, Webview, WebviewPanel, window, Uri, ViewColumn } from "vscode";
 import { getUri } from "../utilities/getUri";
 import { getNonce } from "../utilities/getNonce";
-import { spawn } from 'child_process';
-import * as vscode from 'vscode';
+import { getDebugLogById, getDebugLogs } from "../services/LogExplorerService";
 
 /**
  * This class manages the state and behavior of HelloWorld webview panels.
@@ -92,99 +91,6 @@ export class DebugLogsExplorer {
 	}
 
 	/**
-	 * Method used to retrieve the Salesforce Debug Logs and pass
-	 * it to the WebView.
-	 */
-	public getDebugLogs() {
-		vscode.window.withProgress({
-			location: vscode.ProgressLocation.Notification,
-			title: "Processing Metadata",
-			cancellable: true
-		}, async (progress, token) => {
-			token.onCancellationRequested(() => {
-				console.log("User canceled the long running operation");
-			});
-
-			progress.report({
-				message: 'Retrieving Debug Logs.',
-			});
-
-			const VERSION_NUM = '50.0';
-			const targetOrg = 'chan-dev'; // Replace with the alias of your target org
-			const command = `sfdx apex:log:list -o ${targetOrg} --json`;
-
-			const process = spawn(command, { shell: true });
-			let response: string = '';
-			process.stdout.on('data', data => {
-				console.log(`stdout: ${data}`);
-				response += data.toString();
-			});
-
-			process.stderr.on('data', data => {
-				console.error(`stderr: ${data}`);
-			});
-
-			return new Promise((resolve, reject) => {
-				process.on('close', code => {
-					console.log(`child process exited with code ${code}`);
-					if (code === 0) {
-						if (this._panel) {
-							this._panel.webview.postMessage({ command: 'constructDebugLogsTable', data: response });
-						}
-						resolve(response);
-					} else {
-						reject(new Error(`Command execution failed with code ${code}`));
-					}
-				});
-			});
-		});
-	}
-
-	public getDebugLogById(logId: string) {
-		vscode.window.withProgress({
-			location: vscode.ProgressLocation.Notification,
-			title: "Processing Metadata",
-			cancellable: true
-		}, async (progress, token) => {
-			token.onCancellationRequested(() => {
-				console.log("User canceled the long running operation");
-			});
-
-			progress.report({
-				message: 'Retrieving Debug Log by Id.',
-			});
-
-			const targetOrg = 'chan-dev'; // Replace with the alias of your target org
-			const command = `sfdx apex:log:get --logid ${logId} -o ${targetOrg} --json`;
-
-			const process = spawn(command, { shell: true });
-			let response: string = '';
-			process.stdout.on('data', data => {
-				console.log(`stdout: ${data}`);
-				response += data.toString();
-			});
-
-			process.stderr.on('data', data => {
-				console.error(`stderr: ${data}`);
-			});
-
-			return new Promise((resolve, reject) => {
-				process.on('close', code => {
-					console.log(`child process exited with code ${code}`);
-					if (code === 0) {
-						if (this._panel) {
-							this._panel.webview.postMessage({ command: 'parseDebugLogById', data: response });
-						}
-						resolve(response);
-					} else {
-						reject(new Error(`Command execution failed with code ${code}`));
-					}
-				});
-			});
-		});
-	}
-
-	/**
 	 * Defines and returns the HTML that should be rendered within the webview panel.
 	 *
 	 * @remarks This is also the place where references to the React webview build files
@@ -232,20 +138,17 @@ export class DebugLogsExplorer {
 	private _setWebviewMessageListener(webview: Webview) {
 		webview.onDidReceiveMessage(
 			(message: any) => {
+				if (!this._panel) { return; };
+
 				const command = message.command;
 				const data = message.data;
-
 				switch (command) {
 					case "get-debug-logs":
-						// Code that should run in response to the hello message command
-						// window.showInformationMessage(text);
-						this.getDebugLogs();
+						getDebugLogs(this._panel);
 						return;
 					case 'get-debug-log-by-id':
-						this.getDebugLogById(data);
+						getDebugLogById(this._panel, data);
 						return;
-					// Add more switch case statements here as more webview message commands
-					// are created within the webview context (i.e. inside media/main.js)
 				}
 			},
 			undefined,

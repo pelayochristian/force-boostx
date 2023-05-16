@@ -133,14 +133,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => {
                                 // get the original data for this row
-                                const original = row.original as Log;
+                                const original = row.original as any;
                                 // assign the original Id to the row's key
                                 const rowId = original.Id;
-
-                                // const isSelected = row.getIsSelected();
                                 const isActive = rowId === activeRowId;
                                 const rowClasses = ["cursor-pointer"];
-
                                 if (isActive) {
                                     rowClasses.push("bg-muted/100");
                                 }
