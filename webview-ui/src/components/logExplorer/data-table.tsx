@@ -14,7 +14,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { RefreshCw, Filter } from "lucide-react";
-import { Log } from "./columns";
 import eventBus from "../../lib/eventBus";
 
 interface DataTableProps<TData, TValue> {
@@ -109,7 +108,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                     )}
                 </Button>
             </div>
-            <div className="rounded-md border">
+            <div className="rounded-none border">
                 <Table className="text-xs font-light">
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
