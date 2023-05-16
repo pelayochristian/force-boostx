@@ -9,7 +9,12 @@ interface Log {
         log: string;
     }>;
 }
-const LogsViewer = () => {
+
+interface LogsViewerProps {
+    height: string;
+}
+
+const LogsViewer: React.FC<LogsViewerProps> = ({ height }) => {
     const [log, setLog] = useState<Log | null>(null);
     const [searchString, setSearchString] = useState<string | null>("");
     const [debugOnly, setDebugOnly] = useState(false);
@@ -88,10 +93,8 @@ const LogsViewer = () => {
     };
 
     return (
-        <section>
-            <div
-                className="bg-background flex items-center mb-1"
-                style={{ position: "sticky", top: 0, zIndex: 1 }}>
+        <section style={{ position: "sticky", top: 0, zIndex: 1 }}>
+            <div className="bg-background flex items-center mb-1">
                 <Filter className="mr-2 h-4 w-4" />
                 <Input
                     type="text"
@@ -117,7 +120,7 @@ const LogsViewer = () => {
                 </div>
             </div>
 
-            <div className="p-4 font-light">
+            <div className="p-4 font-light" style={{ overflow: "auto", maxHeight: height }}>
                 {log && (
                     <div>
                         <pre>
