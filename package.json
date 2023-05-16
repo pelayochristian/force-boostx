@@ -1,7 +1,8 @@
 {
     "name": "force-boostx",
-    "displayName": "force-boostx",
-    "description": "A hello world sample extension to demonstrate using React + Vite with the Webview UI Toolkit for VS Code.",
+    "displayName": "ForceBoost",
+    "description": "ForceBoost is a feature-rich VS Code extension designed to supercharge Salesforce developers' productivity.",
+    "publisher": "ChristianPelayo",
     "version": "0.0.1",
     "repository": "https://github.com/pelayochristian/force-boostx",
     "engines": {
