@@ -17,7 +17,7 @@ const App = () => {
             style={{ maxHeight: "100vh", boxSizing: "border-box" }}>
             <div
                 className="w-full"
-                style={{ maxHeight: `${secondPanelSize}px`, overflow: "scroll" }}>
+                style={{ maxHeight: `${secondPanelSize}px`, overflowY: "auto" }}>
                 <DebugLogsTable />
             </div>
             <div
