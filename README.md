@@ -8,6 +8,19 @@
 
 ForceBoost is a Visual Studio Code extension designed to enhance the Salesforce developer experience, making it more efficient and productive. This extension provides various features to simplify the debugging process and streamline the retrieval of debug logs, allowing developers to focus on their code and troubleshoot with ease.
 
+## Download ForceBoost from the Visual Studio Code Marketplace
+
+You can easily download the ForceBoost extension from the Visual Studio Code Marketplace and start enhancing your Salesforce development experience. Here's how:
+
+1. Launch Visual Studio Code.
+2. Go to the Extensions view by clicking on the square icon on the left sidebar or pressing `Ctrl+Shift+X`.
+3. In the search bar, type "ForceBoost" and press Enter.
+4. Look for the ForceBoost extension in the search results.
+5. Click on the "Install" button next to the ForceBoost extension to begin the installation process.
+6. Once installed, you can start enjoying the powerful features and functionalities that ForceBoost offers.
+
+Downloading ForceBoost from the Visual Studio Code Marketplace is quick and straightforward, allowing you to supercharge your Salesforce development in no time. Happy coding with ForceBoost!
+
 ## Features
 
 ### Log Explorer
