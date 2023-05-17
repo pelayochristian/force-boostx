@@ -10,7 +10,7 @@ import { getDebugLogById, getDebugLogs } from "../services/LogExplorerService";
 
 export class LogsExplorerProvider implements WebviewViewProvider {
 
-    public static readonly viewType = 'calicoColors.colorsView';
+    public static readonly viewType = 'force-boostx.showLogExplorerPanel';
     private _view?: WebviewView;
     private _disposables: Disposable[] = [];
 
@@ -61,7 +61,7 @@ export class LogsExplorerProvider implements WebviewViewProvider {
 					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 					<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
 					<link rel="stylesheet" type="text/css" href="${stylesUri}">
-					<title>Force Boost</title>
+					<title>ForceBoost</title>
 				</head>
 				<body>
 					<div id="root"></div>
