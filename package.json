@@ -4,7 +4,7 @@
     "description": "ForceBoost is a feature-rich VS Code extension designed to supercharge Salesforce developers' productivity.",
     "icon": "./github-assets/forceboost-logo.png",
     "publisher": "ChristianPelayo",
-    "version": "0.0.3",
+    "version": "0.1.4",
     "repository": "https://github.com/pelayochristian/force-boostx",
     "engines": {
         "vscode": "^1.46.0"
@@ -13,24 +13,32 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:force-boostx.showHelloWorld"
+        "onCommand:force-boostx.showLogExplorer"
     ],
     "main": "./out/extension.js",
     "contributes": {
+        "viewsContainers": {
+            "panel": [
+                {
+                    "id": "LogExplorer",
+                    "title": "Log Explorer",
+                    "icon": ""
+                }
+            ]
+        },
         "views": {
-            "explorer": [
+            "LogExplorer": [
                 {
                     "type": "webview",
-                    "id": "calicoColors.colorsView",
-                    "name": "Log Explorer",
-                    "contextualTitle": "Log Explorer"
+                    "id": "force-boostx.showLogExplorerPanel",
+                    "name": ""
                 }
             ]
         },
         "commands": [
             {
-                "command": "force-boostx.showHelloWorld",
-                "title": "Force Boost : Show"
+                "command": "force-boostx.showLogExplorer",
+                "title": "ForceBoost : Show Log Explorer"
             }
         ]
     },

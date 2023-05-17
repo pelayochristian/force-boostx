@@ -14,7 +14,7 @@ import { getDebugLogById, getDebugLogs } from "../services/LogExplorerService";
  * - Setting message listeners so data can be passed between the webview and extension
  */
 export class DebugLogsExplorer {
-	public static readonly viewType = 'calicoColors.colorsView';
+	public static readonly viewType = 'force-boostx.showLogExplorerPanel';
 	public static currentPanel: DebugLogsExplorer | undefined;
 	private readonly _panel: WebviewPanel;
 	private _disposables: Disposable[] = [];
@@ -54,9 +54,9 @@ export class DebugLogsExplorer {
 			// If a webview panel does not already exist create and show a new one
 			const panel = window.createWebviewPanel(
 				// Panel view type
-				"showHelloWorld",
+				"showLogExplorer",
 				// Panel title
-				"Force Boost",
+				"Log Explorer",
 				// The editor column the panel should be displayed in
 				ViewColumn.One,
 				// Extra panel configurations
@@ -118,7 +118,7 @@ export class DebugLogsExplorer {
 					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 					<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
 					<link rel="stylesheet" type="text/css" href="${stylesUri}">
-					<title>Force Boost</title>
+					<title>Log Explorer</title>
 				</head>
 				<body>
 					<div id="root"></div>

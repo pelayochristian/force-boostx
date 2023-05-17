@@ -11,7 +11,7 @@ export function activate(context: ExtensionContext) {
 		vscode.window.registerWebviewViewProvider(LogsExplorerProvider.viewType, provider));
 
 	// Create the show hello world command
-	const showHelloWorldCommand = commands.registerCommand("force-boostx.showHelloWorld", () => {
+	const showHelloWorldCommand = commands.registerCommand("force-boostx.showLogExplorer", () => {
 		DebugLogsExplorer.render(context.extensionUri);
 	});
 
