@@ -59,5 +59,9 @@ export const columns: ColumnDef<Log>[] = [
     {
         accessorKey: "LogLength",
         header: "Size (B)",
+        cell: ({ row }) => {
+            const logLength = row.getValue("LogLength") as number;
+            return logLength.toLocaleString();
+        },
     },
 ];
