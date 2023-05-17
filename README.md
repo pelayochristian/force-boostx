@@ -30,3 +30,6 @@ Stay tuned for updates as currently continue to develop and enhance ForceBoost w
 
 Appreciate your interest in ForceBoost! If you have any feedback, suggestions, or issues to report, please visit the [GitHub repository](https://github.com/pelayochristian/force-boostx)
 and create a new issue. I will be happy to assist you and continuously improve the extension based on your valuable feedback. Your input plays a crucial role in shaping the future of ForceBoost. Thank you for your support!
+
+## License
+ForceBoost is licensed under the [MIT License](LICENSE). Please review the license terms before using this extension.
