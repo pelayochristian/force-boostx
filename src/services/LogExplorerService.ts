@@ -24,7 +24,7 @@ export const getDebugLogs = (webview: WebviewView | WebviewPanel) => {
             message: 'Retrieving Debug Logs.',
         });
 
-        const command = `sfdx apex:log:list --json -o ${targetOrg}`;
+        const command = `sfdx apex:log:list --json`;
         const process = spawn(command, { shell: true });
         let response: string = '';
         process.stdout.on('data', data => {
@@ -70,7 +70,7 @@ export const getDebugLogById = (webview: WebviewView | WebviewPanel, logId: stri
             message: 'Retrieving Debug Log by Id.',
         });
 
-        const command = `sfdx apex:log:get --logid ${logId} --json -o ${targetOrg}`;
+        const command = `sfdx apex:log:get --logid ${logId} --json`;
         const process = spawn(command, { shell: true });
         let response: string = '';
         process.stdout.on('data', data => {
